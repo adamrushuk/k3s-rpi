@@ -1,2 +1,3 @@
-# k3s-pi
-Rancher k3s on Raspberry Pie cluster
+# k3s-rpi
+
+Rancher k3s on Raspberry Pi cluster

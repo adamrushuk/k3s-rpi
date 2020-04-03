@@ -1,8 +1,88 @@
+#!/bin/bash
+
 # Install k3s on RPi cluster
 # https://kauri.io/install-and-configure-a-kubernetes-cluster-with-k3s-to-self-host-applications/418b3bc1e0544fbc955a4bbba6fff8a9/a
 
 # vars
 HELM_VERSION="3.1.2"
+
+# update hosts file for local computer
+sudo nano /etc/hosts
+192.168.1.10    pi0
+192.168.1.11    pi1
+192.168.1.12    pi2
+192.168.1.13    pi3
+
+# ssh
+# copy keys to pi's
+ssh-copy-id pi@pi0
+ssh-copy-id pi@pi1
+ssh-copy-id pi@pi2
+ssh-copy-id pi@pi3
+
+
+# storage
+# https://www.instructables.com/id/Turn-Raspberry-Pi-into-a-Network-File-System-versi/
+# nfs server
+# login to master node
+ssh pi@pi0
+
+# install nfs server
+sudo apt-get install nfs-common nfs-kernel-server
+
+# create folder to share
+sudo mkdir -p /srv/nfs4/share
+cd /srv/nfs4/share
+
+# create test file
+sudo nano hello.txt
+Hello NFS
+
+# add share to exports
+sudo nano /etc/exports
+/srv/nfs4/share *(rw,no_root_squash,insecure,async,no_subtree_check,anonuid=1000,anongid=1000)
+cat /etc/exports
+
+# start server
+sudo exportfs -ra
+systemctl list-unit-files | grep nfs
+
+
+# nfs clients
+# do these steps on all worker nodes, eg:
+ssh pi@pi1
+ssh pi@pi2
+ssh pi@pi3
+...
+
+# install nfs client
+sudo apt-get install nfs-common -y
+
+# show nfs server mounts
+showmount -e 192.168.1.10
+
+# create mount folder
+sudo mkdir /mnt/share
+sudo chown -R pi:pi /mnt/share/
+ls -l /mnt
+
+# [optional] temp mount for testing
+sudo mount.nfs4 192.168.1.10:/srv/nfs4/share /mnt/share
+ls -l /mnt/share
+
+# persistent mount
+cat /etc/fstab
+sudo nano /etc/fstab
+192.168.1.10:/srv/nfs4/share   /mnt/share   nfs    rw  0  0
+sudo reboot
+
+
+
+
+
+
+
+
 
 # Install Helm
 sudo wget -O helm.tar.gz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz"
