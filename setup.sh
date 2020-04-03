@@ -21,6 +21,7 @@ ssh-copy-id pi@pi2
 ssh-copy-id pi@pi3
 
 
+
 # storage
 # https://www.instructables.com/id/Turn-Raspberry-Pi-into-a-Network-File-System-versi/
 # nfs server
@@ -78,12 +79,6 @@ sudo reboot
 
 
 
-
-
-
-
-
-
 # Install Helm
 sudo wget -O helm.tar.gz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz"
 tar -zxvf helm.tar.gz
@@ -135,3 +130,22 @@ kubectl get clusterissuer -o wide -w
 
 # check all resources
 kubectl get all,clusterissuer -A
+
+
+
+# kubernetes-dashboard
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml
+
+# check
+kubectl get pods -n kubernetes-dashboard -w
+
+# create admin-user
+kubectl apply -f manifests/kube-dashboard.yml
+
+# Now we have a secure channel, you can access kubernetes-dashboard via the following URL:
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
+# Select "Token", copy/paste the token previously retrieved and click on "Sign in".
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
+# show dashboard
+kubectl proxy
