@@ -1,0 +1,38 @@
+claimToken: "CLAIM_TOKEN" # Replace `<CLAIM_TOKEN>` by the token obtained previously.
+
+image:
+  repository: linuxserver/plex
+  tag: arm32v7-latest
+  pullPolicy: IfNotPresent
+
+kubePlex:
+  enabled: false # kubePlex (transcoder job) is disabled because not available on ARM. The transcoding will be performed by the main Plex instance instead of a separate Job.
+
+timezone: Europe/London
+
+service:
+  type: LoadBalancer # We will use a LoadBalancer to obtain a virtual IP that can be exposed to Plex Media via our router
+  port: 32400 # Port to expose Plex
+
+rbac:
+  create: true
+
+# nodeSelector: {}
+nodeSelector:
+  beta.kubernetes.io/arch: arm
+
+persistence:
+  transcode:
+    claimName: "media-ssd"
+    # size: 10Gi
+  data:
+    claimName: "media-ssd"
+    # size: 10Gi
+  config:
+    claimName: "media-ssd"
+    # size: 5Gi
+
+resources: {}
+podAnnotations: {}
+proxy:
+  enable: false
