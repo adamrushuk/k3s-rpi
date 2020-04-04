@@ -63,18 +63,18 @@ sudo apt-get install nfs-common -y
 showmount -e 192.168.1.10
 
 # create mount folder
-sudo mkdir /mnt/share
-sudo chown -R pi:pi /mnt/share/
+sudo mkdir /mnt/ssd
+sudo chown -R pi:pi /mnt/ssd/
 ls -l /mnt
 
 # [optional] temp mount for testing
-sudo mount.nfs4 192.168.1.10:/srv/nfs4/share /mnt/share
-ls -l /mnt/share
+sudo mount.nfs4 192.168.1.10:/srv/nfs4/share /mnt/ssd
+ls -l /mnt/ssd
 
 # persistent mount
 cat /etc/fstab
 sudo nano /etc/fstab
-192.168.1.10:/srv/nfs4/share   /mnt/share   nfs    rw  0  0
+192.168.1.10:/srv/nfs4/ssd   /mnt/ssd   nfs    rw  0  0
 sudo reboot
 
 
