@@ -1,0 +1,24 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: volume-debugger
+  namespace: media
+spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+  # storageClassName: local-path-nfs
+  volumes:
+  - name: volume-to-debug
+    persistentVolumeClaim:
+      claimName: nfs
+  containers:
+  - name: debugger
+    image: busybox
+    command: ['sleep', '3600']
+    volumeMounts:
+    - mountPath: "/data"
+      name: volume-to-debug
+    resources: {}

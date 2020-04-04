@@ -32,16 +32,27 @@ ssh pi@pi0
 sudo apt-get install nfs-common nfs-kernel-server
 
 # create folder to share
-sudo mkdir -p /srv/nfs4/share
-cd /srv/nfs4/share
+sudo mkdir -p /mnt/ssd
+
+# set perms
+sudo chown -R pi:pi /mnt/ssd
+sudo find /mnt/ssd/ -type d -exec chmod 755 {} \;
+sudo find /mnt/ssd/ -type f -exec chmod 644 {} \;
+ls -la /mnt/
 
 # create test file
-sudo nano hello.txt
+sudo nano /mnt/ssd/hello.txt
 Hello NFS
+
+cat /mnt/ssd/hello.txt
+
+# note gid and uid - prob both 1000
+id pi
 
 # add share to exports
 sudo nano /etc/exports
-/srv/nfs4/share *(rw,no_root_squash,insecure,async,no_subtree_check,anonuid=1000,anongid=1000)
+/mnt/ssd *(rw,all_squash,insecure,async,no_subtree_check,anonuid=1000,anongid=1000)
+
 cat /etc/exports
 
 # start server
@@ -63,18 +74,18 @@ sudo apt-get install nfs-common -y
 showmount -e 192.168.1.10
 
 # create mount folder
-sudo mkdir /mnt/ssd
+sudo mkdir -p /mnt/ssd
 sudo chown -R pi:pi /mnt/ssd/
 ls -l /mnt
 
 # [optional] temp mount for testing
-sudo mount.nfs4 192.168.1.10:/srv/nfs4/share /mnt/ssd
+sudo mount.nfs4 192.168.1.10:/mnt/ssd /mnt/ssd
 ls -l /mnt/ssd
 
 # persistent mount
 cat /etc/fstab
 sudo nano /etc/fstab
-192.168.1.10:/srv/nfs4/ssd   /mnt/ssd   nfs    rw  0  0
+192.168.1.10:/mnt/ssd   /mnt/ssd   nfs    rw  0  0
 sudo reboot
 
 
