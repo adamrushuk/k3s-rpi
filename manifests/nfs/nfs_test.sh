@@ -26,7 +26,7 @@ kubectl apply -f ./manifests/nfs/nfs_pvc.yml
 kubectl get pvc -n media
 kubectl describe pvc nfs -n media
 
-# create pod to test pvc
+# create deployment to test pvc with multiple pods
 kubectl delete -f ./manifests/nfs/nfs_deploy.yml
 kubectl apply -f ./manifests/nfs/nfs_deploy.yml
 kubectl get pod -n media
