@@ -25,3 +25,9 @@ curl -sfL https://get.k3s.io | sh -s agent --docker
 kubectl get nodes -o wide
 kubectl get pods -A -o wide
 kubectl get all -A
+
+
+# copy k3s config from master node to local machine, and
+# replace ip
+scp pi@pi0:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+sed -i 's/127\.0\.0\.1/192\.168\.1\.10/g' ~/.kube/config
