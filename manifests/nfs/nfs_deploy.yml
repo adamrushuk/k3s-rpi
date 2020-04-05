@@ -20,7 +20,7 @@ spec:
         command:
           - sh
           - -c
-          - 'while true; do echo "$(date +"%Y%m%d-%H%M%S") writing to file..."; date > /mnt/localpod/index.html; hostname >> /mnt/localpod/index.html; sleep $(($RANDOM % 5 + 5)); done'
+          - 'while true; ts=$(date +"%Y%m%d-%H%M%S"); do $echo "[$ts] writing to /mnt/localpod/index.html..."; echo "[$ts] $(hostname)" > /mnt/localpod/index.html; sleep 1; done'
         imagePullPolicy: IfNotPresent
         name: busybox
         resources: {}

@@ -4,6 +4,7 @@ metadata:
   name: nfs
 spec:
   # storageClassName: nfs
+  storageClassName: ""
   capacity:
     # storage: 1Gi
     storage: 1Gi

@@ -15,10 +15,10 @@ kubectl get all,pv,pvc -n media
 # kubectl describe sc managed-nfs-storage
 
 # deploy persistent volume (pv)
-# kubectl delete -f ./manifests/nfs/nfs_pv.yml
-# kubectl apply -f ./manifests/nfs/nfs_pv.yml
-# kubectl get pv
-# kubectl describe pv nfs
+kubectl delete -f ./manifests/nfs/nfs_pv.yml
+kubectl apply -f ./manifests/nfs/nfs_pv.yml
+kubectl get pv
+kubectl describe pv nfs
 
 # create persistent volume claim (pvc)
 kubectl delete -f ./manifests/nfs/nfs_pvc.yml

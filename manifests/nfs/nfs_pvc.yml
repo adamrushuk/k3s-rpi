@@ -5,6 +5,7 @@ metadata:
   name: "nfs"
 spec:
   # storageClassName: local-path-nfs
+  storageClassName: ""
   accessModes:
     # - ReadWriteMany
     - ReadWriteOnce
