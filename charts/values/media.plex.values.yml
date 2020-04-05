@@ -1,4 +1,4 @@
-claimToken: "CLAIM_TOKEN" # Replace `<CLAIM_TOKEN>` by the token obtained previously.
+claimToken: "claim-Pz_f9MgnbF95NZJwLzj9" # Replace `<CLAIM_TOKEN>` by the token obtained previously.
 
 image:
   repository: linuxserver/plex
@@ -14,8 +14,10 @@ service:
   type: LoadBalancer # We will use a LoadBalancer to obtain a virtual IP that can be exposed to Plex Media via our router
   port: 32400 # Port to expose Plex
 
-ingress:
-  enabled: true
+# ingress:
+#   enabled: true
+#   hosts:
+#   - media.192.168.1.30.nip.io
 
 rbac:
   create: true

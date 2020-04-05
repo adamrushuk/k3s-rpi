@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# https://kauri.io/install-raspbian-operating-system-and-prepare-the-system-for-kubernetes/7df2a9f9cf5f4f6eb217aa7223c01594/a
+
 # aliases
 sudo cat <<EOT >> ~/.bash_aliases
 alias ll='ls -l'
