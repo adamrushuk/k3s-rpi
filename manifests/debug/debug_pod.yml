@@ -1,7 +1,7 @@
 ---
 # usage
-# kubectl delete -f ./manifests/pvc-debugger.yml
-# kubectl apply -f ./manifests/pvc-debugger.yml
+# kubectl delete -f ./manifests/debug/pvc-debugger.yml
+# kubectl apply -f ./manifests/debug/pvc-debugger.yml
 # kubectl exec -it volume-debugger sh -n media
 kind: Pod
 apiVersion: v1
