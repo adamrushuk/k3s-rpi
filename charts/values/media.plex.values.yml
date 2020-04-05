@@ -23,14 +23,20 @@ nodeSelector:
 
 persistence:
   transcode:
-    claimName: "media-ssd"
-    # size: 10Gi
+    claimName: "nfs"
+    # size: 1Gi
+    # storageClass: ""
+    # accessMode: ReadWriteMany
   data:
-    claimName: "media-ssd"
-    # size: 10Gi
+    claimName: "nfs"
+    # size: 1Gi
+    # storageClass: ""
+    # accessMode: ReadWriteMany
   config:
-    claimName: "media-ssd"
-    # size: 5Gi
+    claimName: "nfs"
+    # size: 1Gi
+    # storageClass: ""
+    # accessMode: ReadWriteMany
 
 resources: {}
 podAnnotations: {}
