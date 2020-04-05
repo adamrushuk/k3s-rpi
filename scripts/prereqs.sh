@@ -23,6 +23,12 @@ echo $orig | sudo tee /boot/cmdline.txt
 sudo apt-get update -q
 sudo apt-get install -qy tree
 
+# firewall
+# Without this step, you may find coredns pods fail to start on app nodes and/or DNS does not work.
+sudo iptables -P FORWARD ACCEPT
+update-alternatives --set iptables /usr/sbin/iptables-legacy
+update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+
 # update windows hosts file for local computer, as wsl overwrites /etc/hosts from this:
 # C:\Windows\System32\drivers\etc\hosts
 # sudo nano /etc/hosts
