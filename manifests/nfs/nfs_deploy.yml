@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-busybox
+  namespace: media
+  labels:
+    app: nfs-busybox
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nfs-busybox
+  template:
+    metadata:
+      labels:
+        app: nfs-busybox
+    spec:
+      containers:
+      - image: busybox
+        command:
+          - sh
+          - -c
+          - 'while true; ts=$(date +"%Y%m%d-%H%M%S"); do echo "[$ts] writing to /mnt/localpod/index.html..."; echo "[$ts] $(hostname)" >> /mnt/localpod/index.html; sleep 1; done'
+        imagePullPolicy: IfNotPresent
+        name: busybox
+        resources: {}
+        volumeMounts:
+          # name must match the volume name below
+          - name: nfs
+            mountPath: "/mnt/localpod"
+      volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: nfs

@@ -6,8 +6,9 @@
 # vars
 HELM_VERSION="3.1.2"
 
-# update hosts file for local computer
-sudo nano /etc/hosts
+# update windows hosts file for local computer, as wsl overwrites from this:
+# C:\Windows\System32\drivers\etc\hosts
+# sudo nano /etc/hosts
 192.168.1.10    pi0
 192.168.1.11    pi1
 192.168.1.12    pi2
@@ -32,13 +33,14 @@ ssh pi@pi0
 sudo apt-get install nfs-common nfs-kernel-server
 
 # create folder to share
-sudo mkdir -p /mnt/ssd
+sudo mkdir -p /mnt/ssd/media
 
 # set perms
-sudo chown -R pi:pi /mnt/ssd
-sudo find /mnt/ssd/ -type d -exec chmod 755 {} \;
-sudo find /mnt/ssd/ -type f -exec chmod 644 {} \;
+sudo chown -R pi:pi /mnt/ssd/media
+sudo find /mnt/ssd/ -type d -exec chmod 777 {} \;
+sudo find /mnt/ssd/ -type f -exec chmod 777 {} \;
 ls -la /mnt/
+tree /mnt
 
 # create test file
 sudo nano /mnt/ssd/hello.txt
@@ -156,7 +158,7 @@ kubectl apply -f manifests/kube-dashboard.yml
 # Now we have a secure channel, you can access kubernetes-dashboard via the following URL:
 # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
 # Select "Token", copy/paste the token previously retrieved and click on "Sign in".
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+kubectl -n kubernetes-dashboard describe secret "$(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')"
 
 # show dashboard
 kubectl proxy

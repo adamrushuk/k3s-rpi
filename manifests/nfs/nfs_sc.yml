@@ -1,0 +1,8 @@
+# NOTE: this isn't needed for nfs example. leaving for future reference
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer

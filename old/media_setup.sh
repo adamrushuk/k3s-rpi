@@ -10,10 +10,10 @@ kubectl get all,pv,pvc -n media
 
 # TESTING NFS
 # create storage class
-# kubectl delete -f ./manifests/storage_class.yml
-# kubectl apply -f ./manifests/storage_class.yml
-# kubectl get sc
-# kubectl describe sc managed-nfs-storage
+kubectl delete -f ./manifests/nfs_sc.yml
+kubectl apply -f ./manifests/nfs_sc.yml
+kubectl get sc
+kubectl describe sc managed-nfs-storage
 
 # deploy persistent volume (pv)
 kubectl delete -f ./manifests/nfs_pv.yml
