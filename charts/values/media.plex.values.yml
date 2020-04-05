@@ -14,6 +14,9 @@ service:
   type: LoadBalancer # We will use a LoadBalancer to obtain a virtual IP that can be exposed to Plex Media via our router
   port: 32400 # Port to expose Plex
 
+ingress:
+  enabled: true
+
 rbac:
   create: true
 
@@ -21,20 +24,22 @@ rbac:
 nodeSelector:
   beta.kubernetes.io/arch: arm
 
+# you cannot use the same claimName for each PVC; they must be different
+# I needed 3 x PVs and 3 x PVCs (1:1 relationship)
 persistence:
   transcode:
-    claimName: "nfs"
-    # size: 1Gi
+    claimName: "transcode"
+    size: 1Gi
     # storageClass: ""
     # accessMode: ReadWriteMany
   data:
-    claimName: "nfs"
-    # size: 1Gi
+    claimName: "data"
+    size: 1Gi
     # storageClass: ""
     # accessMode: ReadWriteMany
   config:
-    claimName: "nfs"
-    # size: 1Gi
+    claimName: "config"
+    size: 1Gi
     # storageClass: ""
     # accessMode: ReadWriteMany
 
