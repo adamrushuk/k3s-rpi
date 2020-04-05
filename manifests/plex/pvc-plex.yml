@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: "media"
-  name: "nfs"
+  name: "transcode"
 spec:
   # A claim can request a particular class by specifying the name of a StorageClass using the attribute storageClassName. Only PVs of the requested class, ones with the same storageClassName as the PVC, can be bound to the PVC.
   # PVCs don’t necessarily have to request a class. A PVC with its storageClassName set equal to "" is always interpreted to be requesting a PV with no class, so it can only be bound to PVs with no class (no annotation or one set equal to ""). A PVC with no storageClassName is not quite the same and is treated differently by the cluster, depending on whether the DefaultStorageClass admission plugin is turned on
@@ -13,3 +13,30 @@ spec:
   resources:
     requests:
       storage: "1Gi"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: "media"
+  name: "data"
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "1Gi"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: "media"
+  name: "config"
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "1Gi"
+---
