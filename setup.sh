@@ -82,6 +82,7 @@ kubectl apply -f manifests/cert-manager/cluster_issuer_prod.yml
 kubectl get clusterissuer -o wide -w
 
 
+# [optional] scripts/kubernetes-dashboard.sh
 
 
 # check all resources
